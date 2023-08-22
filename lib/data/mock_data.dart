@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 import '../models/categorias.dart';
 
+class Produtos {
+  final String id;
+  final List<String> categorias;
+  final String titulo;
+  final String imageUrl;
+  //final List<String> ingredients;
+  //final List<String> steps;
+   const Produtos(
+      {required this.id,
+      required this.categorias,
+      required this.titulo,
+      required this.imageUrl
+      //required this.ingredients,
+      //required this.steps
+      });
+}
 const mockCategories = [
   Categoria(
     id: 'c1',
@@ -52,4 +68,12 @@ const mockCategories = [
     titulo: 'Verão',
     color: Colors.teal,
   ),
+];
+
+const mockProdutos = [
+  Produtos(id: 'p1', 
+  categorias: ['c1',], 
+  titulo: 'Pizza Margerita', 
+  imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg/800px-Spaghetti_Bolognese_mit_Parmesan_oder_Grana_Padano.jpg',
+)
 ];

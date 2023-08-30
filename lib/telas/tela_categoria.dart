@@ -21,11 +21,9 @@ class TelaCategoria extends StatelessWidget {
           crossAxisSpacing: 20, //espaçamento entre os eixos
           mainAxisSpacing: 20, //espaçamento da tela
           ),
-          children: mockCategories.map(
-            (categoria) {
-              return ItemCategoria(categoria);
-            }
-            ).toList(),
+          children: mockCategories.map((e) {
+          return CategoriaItem(e);
+        }).toList(),
           ),
         );
   }

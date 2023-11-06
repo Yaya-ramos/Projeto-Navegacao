@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:projeto2/models/produtos.dart';
 import 'package:projeto2/telas/tela_categoria.dart';
 import 'package:projeto2/telas/tela_produtos.dart';
 import 'package:projeto2/utils/rotas.dart';
+import 'data/produto.dart';
 
 void main() {
   runApp(MeuCardapio());
 }
 class MeuCardapio extends StatelessWidget {
- 
+List<Produto> produtosValidos = dummyProdutos;
   @override
   Widget build(BuildContext context){
     return MaterialApp(
@@ -25,11 +27,12 @@ class MeuCardapio extends StatelessWidget {
     //home: TelaCategoria(),
    routes: {
         Rotas.HOME : (ctx) => TelaCategoria(),
-        Rotas.PRODUTOS : (ctx) => TelaProdutos(), 
+        Rotas.PRODUTOS : (ctx) => TelaProdutos(produtosValidos), 
       }
 
   );
 
-  } 
   }
+}
 
+  

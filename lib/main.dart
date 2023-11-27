@@ -1,38 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:projeto2/models/produtos.dart';
-import 'package:projeto2/telas/tela_categoria.dart';
-import 'package:projeto2/telas/tela_produtos.dart';
-import 'package:projeto2/utils/rotas.dart';
-import 'data/produto.dart';
 
-void main() {
-  runApp(MeuCardapio());
-}
-class MeuCardapio extends StatelessWidget {
-List<Produto> produtosValidos = dummyProdutos;
+import 'telas/tela_categoria.dart';
+import 'telas/tela_produtos.dart';
+import 'data/produtos.dart';
+import 'models/produtos.dart';
+import 'utils/rotas.dart';
+
+void main() => runApp(AppCardapio());
+
+class AppCardapio extends StatelessWidget {
+  Future<List<dynamic>> teste = categoria_produtos();
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-    title: "Cardápio",
-    theme: ThemeData(
-      primaryColor: Colors.blue,
-      fontFamily: 'Schyler',
+      title: 'Cardápio',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: 'Schyler',
         textTheme: ThemeData.light().textTheme.copyWith(
-          titleSmall : const TextStyle(
+              titleSmall: const TextStyle(
             fontSize: 20,
-            fontFamily: "Schyler"
-          ) 
-        )
-    ),
-    //home: TelaCategoria(),
-   routes: {
-        Rotas.HOME : (ctx) => TelaCategoria(),
-        Rotas.PRODUTOS : (ctx) => TelaProdutos(produtosValidos), 
-      }
-
-  );
-
+            fontFamily: "Schyler",
+          ),
+        ),
+      ),
+      routes: {
+        Rotas.HOME: (ctx) => TelaCategorias(),
+        Rotas.PRODUTOS: (ctx) => FutureBuilder<List<dynamic>>(
+          future: teste,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else {
+              if (snapshot.hasError) {
+                return Scaffold(
+                  body: Center(
+                    child: Text('Erro ao carregar os produtos!'),
+                  ),
+                );
+              } else {
+                // Converte a lista dinâmica para List<Produto>
+                List<Produto> produtos = (snapshot.data as List<dynamic>)
+                    .map((item) => Produto.fromJson(item))
+                    .toList();
+                    print("Aqui aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+                print(produtos[0].title);
+                return TelaProdutos(produtos);
+              }
+            }
+          },
+        ),
+      },
+    );
   }
 }
-
-  
